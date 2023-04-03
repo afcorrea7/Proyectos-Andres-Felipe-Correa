@@ -1,0 +1,1993 @@
+[
+    {
+        "id": "f5c1bd0a4113fea2",
+        "type": "tab",
+        "label": "Flows_1a5_Andres Correa",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9bb24694fe6fcdbc",
+        "type": "inject",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 80,
+        "y": 80,
+        "wires": [
+            [
+                "eb4a61121e63bade"
+            ]
+        ]
+    },
+    {
+        "id": "eb4a61121e63bade",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "obtenerVentaMax",
+        "func": "msg.topic = \"SELECT MAX(Ventas_Total) AS 'Maxima' FROM curso.ventas WHERE Ventas_Fecha = '\"+global.get(\"fecha\")+\"'\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 80,
+        "wires": [
+            [
+                "49ab23c588edf56d"
+            ]
+        ]
+    },
+    {
+        "id": "49ab23c588edf56d",
+        "type": "mysql",
+        "z": "f5c1bd0a4113fea2",
+        "mydb": "3ca75d0c.e8d602",
+        "name": "Mysql",
+        "x": 490,
+        "y": 80,
+        "wires": [
+            [
+                "a235df092d57269b",
+                "fbe2afd85211a03d"
+            ]
+        ]
+    },
+    {
+        "id": "56cf3d7460fdf368",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "global_fecha",
+        "func": "global.set(\"fecha\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 160,
+        "wires": [
+            [
+                "eb4a61121e63bade"
+            ]
+        ]
+    },
+    {
+        "id": "1da60d345f5a6707",
+        "type": "moment",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "topic": "",
+        "input": "",
+        "inputType": "msg",
+        "inTz": "America/Bogota",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "YYYY-MM-DD",
+        "locale": "en-US",
+        "output": "",
+        "outputType": "msg",
+        "outTz": "America/Bogota",
+        "x": 240,
+        "y": 160,
+        "wires": [
+            [
+                "56cf3d7460fdf368"
+            ]
+        ]
+    },
+    {
+        "id": "0acb24689620941b",
+        "type": "ui_date_picker",
+        "z": "f5c1bd0a4113fea2",
+        "name": "Fecha",
+        "label": "date",
+        "group": "15f7d0cb5cf49ad0",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 70,
+        "y": 160,
+        "wires": [
+            [
+                "1da60d345f5a6707"
+            ]
+        ]
+    },
+    {
+        "id": "b0923144633ff9e1",
+        "type": "ui_gauge",
+        "z": "f5c1bd0a4113fea2",
+        "name": "Gauge Venta",
+        "group": "15f7d0cb5cf49ad0",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Venta Maxima",
+        "label": "$$$",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "90000",
+        "colors": [
+            "#e64937",
+            "#e6e600",
+            "#00b500"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 950,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "a235df092d57269b",
+        "type": "debug",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "fbe2afd85211a03d",
+        "type": "change",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].Maxima",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 80,
+        "wires": [
+            [
+                "19c686724935197c",
+                "b0923144633ff9e1"
+            ]
+        ]
+    },
+    {
+        "id": "19c686724935197c",
+        "type": "ui_text",
+        "z": "f5c1bd0a4113fea2",
+        "group": "15f7d0cb5cf49ad0",
+        "order": 4,
+        "width": 5,
+        "height": 2,
+        "name": "",
+        "label": "Ventas en el día:",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "x": 970,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "e86090025c78f13b",
+        "type": "comment",
+        "z": "f5c1bd0a4113fea2",
+        "name": "VENTA MAXIMA",
+        "info": "Venta Maxima",
+        "x": 100,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "23f15a020f25b58d",
+        "type": "ui_text_input",
+        "z": "f5c1bd0a4113fea2",
+        "name": "Cli_Id",
+        "label": "ID Cliente",
+        "tooltip": "",
+        "group": "cf2b894e6fef7e5d",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 230,
+        "y": 340,
+        "wires": [
+            [
+                "e502c6a7c8a8d591"
+            ]
+        ]
+    },
+    {
+        "id": "e502c6a7c8a8d591",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "global_CliId",
+        "func": "global.set(\"Cli_Id\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "724a22b83240829f",
+        "type": "ui_button",
+        "z": "f5c1bd0a4113fea2",
+        "name": "Buscador Cli",
+        "group": "cf2b894e6fef7e5d",
+        "order": 7,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Buscar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 70,
+        "y": 280,
+        "wires": [
+            [
+                "befb6eb7c4a45552"
+            ]
+        ]
+    },
+    {
+        "id": "befb6eb7c4a45552",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "ComprasCliente",
+        "func": "msg.topic = \"SELECT Ventas_Fecha, SUM(Ventas_Total) AS 'ComprasTotal', Ventas_CliId, Cli_RazonSocial AS 'NombreCliente' FROM curso.ventas JOIN curso.clientes ON Ventas_CliId = Cli_Id WHERE Ventas_CliId = \" + global.get(\"Cli_Id\") + \" AND Ventas_Fecha = '\"+global.get(\"Cli_Fecha\")+\"'\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 280,
+        "wires": [
+            [
+                "470f02b2830f0bd8"
+            ]
+        ]
+    },
+    {
+        "id": "8b7a661f7ab35a2e",
+        "type": "inject",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 80,
+        "y": 320,
+        "wires": [
+            [
+                "befb6eb7c4a45552"
+            ]
+        ]
+    },
+    {
+        "id": "470f02b2830f0bd8",
+        "type": "mysql",
+        "z": "f5c1bd0a4113fea2",
+        "mydb": "3ca75d0c.e8d602",
+        "name": "Mysql",
+        "x": 470,
+        "y": 280,
+        "wires": [
+            [
+                "7c5ad45bd571eb9d",
+                "570f50e7468a9177",
+                "bf19917039f5e053"
+            ]
+        ]
+    },
+    {
+        "id": "d92f124fec261249",
+        "type": "ui_date_picker",
+        "z": "f5c1bd0a4113fea2",
+        "name": "fecha_cli",
+        "label": "Fecha de Compra",
+        "group": "cf2b894e6fef7e5d",
+        "order": 5,
+        "width": 6,
+        "height": 2,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 100,
+        "y": 380,
+        "wires": [
+            [
+                "e3a078f075855acf"
+            ]
+        ]
+    },
+    {
+        "id": "d8777d9ffbfe44f0",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "global_CliFecha",
+        "func": "global.set(\"Cli_Fecha\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e3a078f075855acf",
+        "type": "moment",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "topic": "",
+        "input": "",
+        "inputType": "msg",
+        "inTz": "America/Bogota",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "YYYY-MM-DD",
+        "locale": "en-US",
+        "output": "",
+        "outputType": "msg",
+        "outTz": "America/Bogota",
+        "x": 300,
+        "y": 380,
+        "wires": [
+            [
+                "d8777d9ffbfe44f0"
+            ]
+        ]
+    },
+    {
+        "id": "7c5ad45bd571eb9d",
+        "type": "debug",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "570f50e7468a9177",
+        "type": "change",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].NombreCliente",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 280,
+        "wires": [
+            [
+                "671a5541043738f3"
+            ]
+        ]
+    },
+    {
+        "id": "671a5541043738f3",
+        "type": "ui_text",
+        "z": "f5c1bd0a4113fea2",
+        "group": "cf2b894e6fef7e5d",
+        "order": 9,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Nombre Cliente:",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "x": 900,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "df616846c6334161",
+        "type": "ui_gauge",
+        "z": "f5c1bd0a4113fea2",
+        "name": "Gauge compras",
+        "group": "cf2b894e6fef7e5d",
+        "order": 3,
+        "width": 6,
+        "height": 3,
+        "gtype": "gage",
+        "title": "Compras Totales del Cliente",
+        "label": "$$$",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "40000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 900,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "bf19917039f5e053",
+        "type": "change",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].ComprasTotal",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 320,
+        "wires": [
+            [
+                "df616846c6334161"
+            ]
+        ]
+    },
+    {
+        "id": "64b2e1b35eabd19c",
+        "type": "comment",
+        "z": "f5c1bd0a4113fea2",
+        "name": "COMPRAS TOTALES POR CLIENTE",
+        "info": "",
+        "x": 170,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "f6c61af4bb77d298",
+        "type": "ui_text_input",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "label": "Numero factura",
+        "tooltip": "",
+        "group": "2f07a7909f335608",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "passthru": true,
+        "mode": "number",
+        "delay": 300,
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 100,
+        "y": 640,
+        "wires": [
+            [
+                "6f31873e13f583cc"
+            ]
+        ]
+    },
+    {
+        "id": "6f31873e13f583cc",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "global_NumFact",
+        "func": "global.set(\"numFact\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "35436b642b8f2e6a",
+        "type": "ui_button",
+        "z": "f5c1bd0a4113fea2",
+        "name": "Ver Diff",
+        "group": "2f07a7909f335608",
+        "order": 5,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Ver Diferencia de Dias",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 80,
+        "y": 540,
+        "wires": [
+            [
+                "d84fc0543594b635"
+            ]
+        ]
+    },
+    {
+        "id": "28a00a96bcd2bab8",
+        "type": "inject",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 80,
+        "y": 580,
+        "wires": [
+            [
+                "d84fc0543594b635"
+            ]
+        ]
+    },
+    {
+        "id": "e6bb31090db71a08",
+        "type": "moment",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "topic": "",
+        "input": "",
+        "inputType": "msg",
+        "inTz": "America/Bogota",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "YYYY-MM-DD",
+        "locale": "en-US",
+        "output": "",
+        "outputType": "msg",
+        "outTz": "America/Bogota",
+        "x": 280,
+        "y": 680,
+        "wires": [
+            [
+                "3359ab94e4c7a72e"
+            ]
+        ]
+    },
+    {
+        "id": "83531c6b28abf4bc",
+        "type": "ui_date_picker",
+        "z": "f5c1bd0a4113fea2",
+        "name": "fecha_fact",
+        "label": "Fecha de Factura",
+        "group": "2f07a7909f335608",
+        "order": 3,
+        "width": 6,
+        "height": 1,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 90,
+        "y": 680,
+        "wires": [
+            [
+                "e6bb31090db71a08"
+            ]
+        ]
+    },
+    {
+        "id": "3359ab94e4c7a72e",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "global_FactFecha",
+        "func": "global.set(\"Fact_Fecha\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d84fc0543594b635",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "FechayFactura",
+        "func": "msg.topic = \"SELECT DATEDIFF('\" + global.get(\"Fact_Fecha\") + \"',Ventas_Fecha ) AS Dias, Ventas_NroFactura FROM curso.ventas WHERE Ventas_NroFactura = \" + global.get(\"numFact\")\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 540,
+        "wires": [
+            [
+                "424c2a028a4a8d38"
+            ]
+        ]
+    },
+    {
+        "id": "424c2a028a4a8d38",
+        "type": "mysql",
+        "z": "f5c1bd0a4113fea2",
+        "mydb": "3ca75d0c.e8d602",
+        "name": "Mysql",
+        "x": 450,
+        "y": 540,
+        "wires": [
+            [
+                "3b9dfb9a0874b230",
+                "3f430d2da78bd083"
+            ]
+        ]
+    },
+    {
+        "id": "3b9dfb9a0874b230",
+        "type": "debug",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "3f430d2da78bd083",
+        "type": "change",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].Dias",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 540,
+        "wires": [
+            [
+                "85b4b6cd1e07ee57"
+            ]
+        ]
+    },
+    {
+        "id": "85b4b6cd1e07ee57",
+        "type": "ui_text",
+        "z": "f5c1bd0a4113fea2",
+        "group": "2f07a7909f335608",
+        "order": 4,
+        "width": 4,
+        "height": 1,
+        "name": "",
+        "label": "# de Dias:",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "x": 880,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "3b73a5d0b6ee8b3a",
+        "type": "comment",
+        "z": "f5c1bd0a4113fea2",
+        "name": "DIFERENCIA DE DIAS ENTRE FACTURAS",
+        "info": "",
+        "x": 190,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "36d07f92040d742b",
+        "type": "inject",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 920,
+        "wires": [
+            [
+                "5ccc2ea3cbd4e51a"
+            ]
+        ]
+    },
+    {
+        "id": "fbf40d0e1b03fd54",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "nombreGlobal",
+        "func": "global.set(\"nombre\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3b9391db775d4446",
+        "type": "ui_text_input",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "label": "Nombre Producto",
+        "tooltip": "",
+        "group": "2479fa6ba09099c7",
+        "order": 1,
+        "width": 5,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "topicType": "str",
+        "x": 290,
+        "y": 920,
+        "wires": [
+            [
+                "fbf40d0e1b03fd54"
+            ]
+        ]
+    },
+    {
+        "id": "5ccc2ea3cbd4e51a",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "buscarProd",
+        "func": "msg.topic = \"SELECT * FROM curso.productos JOIN curso.proveedores ON Prod_ProvId = Prov_Id WHERE Prod_Descripcion LIKE '%\"+global.get(\"nombre\")+\"%'\"\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 880,
+        "wires": [
+            [
+                "b61fec8cc5893a52"
+            ]
+        ]
+    },
+    {
+        "id": "b61fec8cc5893a52",
+        "type": "mysql",
+        "z": "f5c1bd0a4113fea2",
+        "mydb": "3ca75d0c.e8d602",
+        "name": "Mysql",
+        "x": 490,
+        "y": 880,
+        "wires": [
+            [
+                "db8af0c3d4ce262e",
+                "75a7c43ab7874f9d",
+                "8cca62ef6ad840c3",
+                "45b082a87789ac61",
+                "66a2a6b11c436b26"
+            ]
+        ]
+    },
+    {
+        "id": "8b14168c604840a1",
+        "type": "ui_button",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "group": "2479fa6ba09099c7",
+        "order": 3,
+        "width": 5,
+        "height": 1,
+        "passthru": false,
+        "label": "Buscar por Nombre",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 110,
+        "y": 880,
+        "wires": [
+            [
+                "5ccc2ea3cbd4e51a"
+            ]
+        ]
+    },
+    {
+        "id": "c9beefc5c9f43a39",
+        "type": "ui_text_input",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "label": "Id Producto",
+        "tooltip": "",
+        "group": "2479fa6ba09099c7",
+        "order": 2,
+        "width": 5,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "topicType": "str",
+        "x": 170,
+        "y": 960,
+        "wires": [
+            [
+                "3dc59e319c6dbde5"
+            ]
+        ]
+    },
+    {
+        "id": "3dc59e319c6dbde5",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "nombreGlobal",
+        "func": "global.set(\"prodid\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "527ecc53991705ed",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "buscarProd",
+        "func": "msg.topic = \"SELECT * FROM curso.productos JOIN curso.proveedores ON Prod_ProvId = Prov_Id WHERE Prod_Id=\"+global.get(\"prodid\")\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 840,
+        "wires": [
+            [
+                "b61fec8cc5893a52"
+            ]
+        ]
+    },
+    {
+        "id": "10e1d3751e9b04dd",
+        "type": "ui_button",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "group": "2479fa6ba09099c7",
+        "order": 4,
+        "width": 5,
+        "height": 1,
+        "passthru": false,
+        "label": "Buscar por Id",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 90,
+        "y": 840,
+        "wires": [
+            [
+                "527ecc53991705ed"
+            ]
+        ]
+    },
+    {
+        "id": "75a7c43ab7874f9d",
+        "type": "change",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].Prod_Descripcion",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 880,
+        "wires": [
+            [
+                "abfa2ff7108be5cc"
+            ]
+        ]
+    },
+    {
+        "id": "db8af0c3d4ce262e",
+        "type": "debug",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "abfa2ff7108be5cc",
+        "type": "ui_text",
+        "z": "f5c1bd0a4113fea2",
+        "group": "2479fa6ba09099c7",
+        "order": 7,
+        "width": 4,
+        "height": 2,
+        "name": "",
+        "label": "Producto",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 940,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "8cca62ef6ad840c3",
+        "type": "change",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].Prov_Nombre",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 920,
+        "wires": [
+            [
+                "772f7c724056a240"
+            ]
+        ]
+    },
+    {
+        "id": "772f7c724056a240",
+        "type": "ui_text",
+        "z": "f5c1bd0a4113fea2",
+        "group": "2479fa6ba09099c7",
+        "order": 8,
+        "width": 4,
+        "height": 2,
+        "name": "",
+        "label": "Proveedor",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 950,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "45b082a87789ac61",
+        "type": "change",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].Prod_Precio",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 960,
+        "wires": [
+            [
+                "95f82df826a461e9"
+            ]
+        ]
+    },
+    {
+        "id": "95f82df826a461e9",
+        "type": "ui_text",
+        "z": "f5c1bd0a4113fea2",
+        "group": "2479fa6ba09099c7",
+        "order": 13,
+        "width": 4,
+        "height": 2,
+        "name": "",
+        "label": "Precio",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 930,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "66a2a6b11c436b26",
+        "type": "change",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].Prod_Color",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 1000,
+        "wires": [
+            [
+                "84b216a023689ffd"
+            ]
+        ]
+    },
+    {
+        "id": "84b216a023689ffd",
+        "type": "ui_text",
+        "z": "f5c1bd0a4113fea2",
+        "group": "2479fa6ba09099c7",
+        "order": 14,
+        "width": 4,
+        "height": 2,
+        "name": "",
+        "label": "Color",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 930,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "2947481d0f838f69",
+        "type": "ui_button",
+        "z": "f5c1bd0a4113fea2",
+        "name": "BuscaSinColor",
+        "group": "9fc583b471ae4a81",
+        "order": 2,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Buscar Producto sin Color",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 100,
+        "y": 1080,
+        "wires": [
+            [
+                "e74446e24d6165f0"
+            ]
+        ]
+    },
+    {
+        "id": "e74446e24d6165f0",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "buscarProd",
+        "func": "msg.topic = \"SELECT Prod_Id, Prod_Descripcion FROM curso.productos WHERE Prod_Color=''\"\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 1080,
+        "wires": [
+            [
+                "76be1a02d822eaa2"
+            ]
+        ]
+    },
+    {
+        "id": "d5ed9c1632ee09cd",
+        "type": "inject",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1120,
+        "wires": [
+            [
+                "e74446e24d6165f0"
+            ]
+        ]
+    },
+    {
+        "id": "76be1a02d822eaa2",
+        "type": "mysql",
+        "z": "f5c1bd0a4113fea2",
+        "mydb": "3ca75d0c.e8d602",
+        "name": "Mysql",
+        "x": 490,
+        "y": 1080,
+        "wires": [
+            [
+                "577181a61f4704bc",
+                "efb0cce98ab254a9",
+                "7a957b420fd6df53"
+            ]
+        ]
+    },
+    {
+        "id": "8e037fa408caba20",
+        "type": "ui_text_input",
+        "z": "f5c1bd0a4113fea2",
+        "name": "NewColor",
+        "label": "Nuevo Color",
+        "tooltip": "",
+        "group": "9fc583b471ae4a81",
+        "order": 9,
+        "width": 4,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 220,
+        "y": 1040,
+        "wires": [
+            [
+                "072ce03a8fb9bb5c"
+            ]
+        ]
+    },
+    {
+        "id": "072ce03a8fb9bb5c",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "nombreColor",
+        "func": "global.set(\"nameColor\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 1040,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "767ee1409126fe51",
+        "type": "ui_button",
+        "z": "f5c1bd0a4113fea2",
+        "name": "AddColor",
+        "group": "9fc583b471ae4a81",
+        "order": 10,
+        "width": 4,
+        "height": 1,
+        "passthru": false,
+        "label": "Añadir Color",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 240,
+        "y": 1160,
+        "wires": [
+            [
+                "81a9f5df1bcb5637",
+                "6e3a28645880fd04"
+            ]
+        ]
+    },
+    {
+        "id": "81a9f5df1bcb5637",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "addColor",
+        "func": "msg.topic = \"UPDATE curso.productos SET Prod_Color='\" + global.get(\"nameColor\") + \"' WHERE Prod_Id=\" + global.get(\"prod_id\")\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 1160,
+        "wires": [
+            [
+                "83416ddf31958335"
+            ]
+        ]
+    },
+    {
+        "id": "83416ddf31958335",
+        "type": "mysql",
+        "z": "f5c1bd0a4113fea2",
+        "mydb": "3ca75d0c.e8d602",
+        "name": "Mysql",
+        "x": 550,
+        "y": 1160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6e3a28645880fd04",
+        "type": "ui_toast",
+        "z": "f5c1bd0a4113fea2",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "Color añadido exitosamente :)",
+        "name": "Popup",
+        "x": 370,
+        "y": 1120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "577181a61f4704bc",
+        "type": "debug",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "efb0cce98ab254a9",
+        "type": "change",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].Prod_Descripcion",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 1120,
+        "wires": [
+            [
+                "42dad4b1f87a7e3b"
+            ]
+        ]
+    },
+    {
+        "id": "7a957b420fd6df53",
+        "type": "change",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].Prod_Id",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 1160,
+        "wires": [
+            [
+                "63577688bffd041d",
+                "5760ad391f048d54"
+            ]
+        ]
+    },
+    {
+        "id": "42dad4b1f87a7e3b",
+        "type": "ui_text",
+        "z": "f5c1bd0a4113fea2",
+        "group": "9fc583b471ae4a81",
+        "order": 4,
+        "width": 4,
+        "height": 2,
+        "name": "",
+        "label": "Producto",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 940,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "63577688bffd041d",
+        "type": "ui_text",
+        "z": "f5c1bd0a4113fea2",
+        "group": "9fc583b471ae4a81",
+        "order": 5,
+        "width": 4,
+        "height": 2,
+        "name": "",
+        "label": "ID",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 930,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "5760ad391f048d54",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "idGlobal",
+        "func": "global.set(\"prod_id\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 1200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c6608b87dee16b5b",
+        "type": "comment",
+        "z": "f5c1bd0a4113fea2",
+        "name": "BUSCAR SIN COLOR",
+        "info": "",
+        "x": 120,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "f25ad20944f00cb4",
+        "type": "ui_button",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "group": "a33707f65140ede3",
+        "order": 11,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Ingresar nuevo",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 100,
+        "y": 1340,
+        "wires": [
+            [
+                "97326cc14e4ba4a0"
+            ]
+        ]
+    },
+    {
+        "id": "d9c81ef18b9c26d6",
+        "type": "ui_text_input",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "label": "Nombre Producto",
+        "tooltip": "",
+        "group": "a33707f65140ede3",
+        "order": 2,
+        "width": 5,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "topicType": "str",
+        "x": 90,
+        "y": 1400,
+        "wires": [
+            [
+                "d661ca10534c2208"
+            ]
+        ]
+    },
+    {
+        "id": "d661ca10534c2208",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "nuevonom",
+        "func": "global.set(\"nuevonom\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 1400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bbc2a8cf8c031f14",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "nuevocol",
+        "func": "global.set(\"nuevocol\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6c3ad132936439b9",
+        "type": "ui_text_input",
+        "z": "f5c1bd0a4113fea2",
+        "name": "NuevoColor",
+        "label": "Color",
+        "tooltip": "",
+        "group": "a33707f65140ede3",
+        "order": 4,
+        "width": 5,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "topicType": "str",
+        "x": 450,
+        "y": 1400,
+        "wires": [
+            [
+                "bbc2a8cf8c031f14"
+            ]
+        ]
+    },
+    {
+        "id": "9c31b679bd7611e0",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "nuevoprecio",
+        "func": "global.set(\"nuevoprecio\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 1440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e4af2299275437f",
+        "type": "ui_text_input",
+        "z": "f5c1bd0a4113fea2",
+        "name": "NuevoPrecio",
+        "label": "Precio",
+        "tooltip": "",
+        "group": "a33707f65140ede3",
+        "order": 3,
+        "width": 5,
+        "height": 1,
+        "passthru": true,
+        "mode": "number",
+        "delay": 300,
+        "topic": "",
+        "topicType": "str",
+        "x": 450,
+        "y": 1440,
+        "wires": [
+            [
+                "9c31b679bd7611e0"
+            ]
+        ]
+    },
+    {
+        "id": "97326cc14e4ba4a0",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "Input nuevo",
+        "func": "msg.topic = \"INSERT INTO curso.productos(Prod_Descripcion, Prod_Color, Prod_Status, Prod_Precio, Prod_ProvId) VALUES ('\" + global.get(\"nuevonom\") + \"','\" + global.get(\"nuevocol\") + \"',\" + global.get(\"nuevostatus\") + \",\" + global.get(\"nuevoprecio\") + \",\" + global.get(\"nuevoprov\")+\")\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 1340,
+        "wires": [
+            [
+                "d791c87c76b7ea40",
+                "3574bae7fde1032c"
+            ]
+        ]
+    },
+    {
+        "id": "53a6886252818617",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "nuevostatus",
+        "func": "global.set(\"nuevostatus\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 1440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cf71839a55f2f473",
+        "type": "function",
+        "z": "f5c1bd0a4113fea2",
+        "name": "nuevoprov",
+        "func": "global.set(\"nuevoprov\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 1480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c0b743102ec3c9ad",
+        "type": "ui_text_input",
+        "z": "f5c1bd0a4113fea2",
+        "name": "NuevoProv",
+        "label": "ID Proveedor",
+        "tooltip": "",
+        "group": "a33707f65140ede3",
+        "order": 7,
+        "width": 6,
+        "height": 1,
+        "passthru": true,
+        "mode": "number",
+        "delay": 300,
+        "topic": "",
+        "topicType": "str",
+        "x": 270,
+        "y": 1480,
+        "wires": [
+            [
+                "cf71839a55f2f473"
+            ]
+        ]
+    },
+    {
+        "id": "a081c9c8c4242224",
+        "type": "ui_numeric",
+        "z": "f5c1bd0a4113fea2",
+        "name": "nuevostatus",
+        "label": "Status",
+        "tooltip": "",
+        "group": "a33707f65140ede3",
+        "order": 5,
+        "width": 5,
+        "height": 1,
+        "wrap": false,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1",
+        "step": 1,
+        "x": 110,
+        "y": 1440,
+        "wires": [
+            [
+                "53a6886252818617"
+            ]
+        ]
+    },
+    {
+        "id": "d791c87c76b7ea40",
+        "type": "mysql",
+        "z": "f5c1bd0a4113fea2",
+        "mydb": "3ca75d0c.e8d602",
+        "name": "Mysql",
+        "x": 430,
+        "y": 1340,
+        "wires": [
+            [
+                "48430be58a609254"
+            ]
+        ]
+    },
+    {
+        "id": "48430be58a609254",
+        "type": "debug",
+        "z": "f5c1bd0a4113fea2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "3574bae7fde1032c",
+        "type": "ui_toast",
+        "z": "f5c1bd0a4113fea2",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "Nuevo Producto Ingresado",
+        "name": "PopupNuevo",
+        "x": 430,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "08dd73ed63148a0a",
+        "type": "comment",
+        "z": "f5c1bd0a4113fea2",
+        "name": "INGRESAR NUEVO",
+        "info": "",
+        "x": 110,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "3ca75d0c.e8d602",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "curso",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "15f7d0cb5cf49ad0",
+        "type": "ui_group",
+        "name": "Venta Max",
+        "tab": "6beca63d1f3b6fdf",
+        "order": 2,
+        "disp": true,
+        "width": 7,
+        "collapse": false
+    },
+    {
+        "id": "cf2b894e6fef7e5d",
+        "type": "ui_group",
+        "name": "Compras Cliente",
+        "tab": "aaed266b.ccbe58",
+        "order": 2,
+        "disp": true,
+        "width": 12,
+        "collapse": false
+    },
+    {
+        "id": "2f07a7909f335608",
+        "type": "ui_group",
+        "name": "Diff Factura",
+        "tab": "b4766cb57f469ff3",
+        "order": 1,
+        "disp": true,
+        "width": 10,
+        "collapse": false
+    },
+    {
+        "id": "2479fa6ba09099c7",
+        "type": "ui_group",
+        "name": "Busca Producto",
+        "tab": "f07ec1184c6b4ce3",
+        "order": 1,
+        "disp": true,
+        "width": 10,
+        "collapse": false
+    },
+    {
+        "id": "9fc583b471ae4a81",
+        "type": "ui_group",
+        "name": "Buscar Productos sin Color",
+        "tab": "f07ec1184c6b4ce3",
+        "order": 2,
+        "disp": true,
+        "width": 8,
+        "collapse": false
+    },
+    {
+        "id": "a33707f65140ede3",
+        "type": "ui_group",
+        "name": "Insertar Entrada",
+        "tab": "afc997be4874b27b",
+        "order": 1,
+        "disp": true,
+        "width": 10,
+        "collapse": false
+    },
+    {
+        "id": "6beca63d1f3b6fdf",
+        "type": "ui_tab",
+        "name": "Maximos",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "aaed266b.ccbe58",
+        "type": "ui_tab",
+        "name": "Compras Cliente",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "b4766cb57f469ff3",
+        "type": "ui_tab",
+        "name": "Dif de Dias con Facturas",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "f07ec1184c6b4ce3",
+        "type": "ui_tab",
+        "name": "Busca Producto",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "afc997be4874b27b",
+        "type": "ui_tab",
+        "name": "Insertar entrada",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

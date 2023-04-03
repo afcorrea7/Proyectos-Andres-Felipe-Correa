@@ -1,0 +1,1461 @@
+[
+    {
+        "id": "3c3c01df6adf0cf0",
+        "type": "tab",
+        "label": "Robot",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5fbb9dda83e5d016",
+        "type": "mysql",
+        "z": "3c3c01df6adf0cf0",
+        "mydb": "99bccc8f7ed35686",
+        "name": "Mysql",
+        "x": 590,
+        "y": 160,
+        "wires": [
+            [
+                "7e99d4f514dbab5c"
+            ]
+        ]
+    },
+    {
+        "id": "87b844eb54eba38a",
+        "type": "function",
+        "z": "3c3c01df6adf0cf0",
+        "name": "function 10",
+        "func": "msg.topic = \"INSERT INTO robotmovil.Metricas (Referencia, Nombre, NivelBateria, RevMI, RevMD, DistOB, ColisionIR) VALUES('\"+ global.get(\"ref\") + \"','\" + global.get(\"nombre\") + \"',\" + global.get(\"bateria\") + \",\" + global.get(\"revMI\") + \",\" + global.get(\"revMD\") + \",\" + global.get(\"disOb\") + \",\" + global.get(\"colisionIR\") +\")\"\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 160,
+        "wires": [
+            [
+                "5fbb9dda83e5d016"
+            ]
+        ]
+    },
+    {
+        "id": "7e99d4f514dbab5c",
+        "type": "debug",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "e969c7770428c017",
+        "type": "function",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "func": "global.set(\"ref\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b3982aeef4228b0e",
+        "type": "ui_text_input",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "label": "Referencia",
+        "tooltip": "",
+        "group": "65d63b4a7aec4b4a",
+        "order": 2,
+        "width": 7,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "topicType": "str",
+        "x": 190,
+        "y": 220,
+        "wires": [
+            [
+                "e969c7770428c017"
+            ]
+        ]
+    },
+    {
+        "id": "15f4be27a8a0bb77",
+        "type": "function",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "func": "global.set(\"nombre\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ae572c8ed62758b0",
+        "type": "ui_text_input",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "label": "Nombre",
+        "tooltip": "",
+        "group": "65d63b4a7aec4b4a",
+        "order": 5,
+        "width": 7,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "topicType": "str",
+        "x": 180,
+        "y": 260,
+        "wires": [
+            [
+                "15f4be27a8a0bb77"
+            ]
+        ]
+    },
+    {
+        "id": "1ee6f5b1a3929916",
+        "type": "ui_slider",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "label": "Batería",
+        "tooltip": "",
+        "group": "65d63b4a7aec4b4a",
+        "order": 7,
+        "width": 5,
+        "height": 1,
+        "passthru": true,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": "1",
+        "max": "4",
+        "step": 1,
+        "x": 160,
+        "y": 440,
+        "wires": [
+            [
+                "f02765f6394a016e",
+                "8bb0e15894dfab4f"
+            ]
+        ]
+    },
+    {
+        "id": "2ae553c67a7367ca",
+        "type": "function",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "func": "global.set(\"colisionIR\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "42e74a8107b81f12",
+        "type": "ui_slider",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "label": "Dis Ob",
+        "tooltip": "",
+        "group": "65d63b4a7aec4b4a",
+        "order": 17,
+        "width": 5,
+        "height": 1,
+        "passthru": true,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": "1",
+        "max": "4",
+        "step": "1",
+        "x": 150,
+        "y": 1040,
+        "wires": [
+            [
+                "1d7eab7f6612ca75"
+            ]
+        ]
+    },
+    {
+        "id": "3a7adac0f671dd31",
+        "type": "ui_slider",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "label": "Rev MI",
+        "tooltip": "",
+        "group": "65d63b4a7aec4b4a",
+        "order": 11,
+        "width": 5,
+        "height": 1,
+        "passthru": true,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": "1",
+        "max": "4",
+        "step": "1",
+        "x": 160,
+        "y": 640,
+        "wires": [
+            [
+                "5d9ce876f6210c4a"
+            ]
+        ]
+    },
+    {
+        "id": "57a13fb14af76e9d",
+        "type": "ui_slider",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "label": "Rev MD",
+        "tooltip": "",
+        "group": "65d63b4a7aec4b4a",
+        "order": 13,
+        "width": 5,
+        "height": 1,
+        "passthru": true,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": "1",
+        "max": "4",
+        "step": "1",
+        "x": 160,
+        "y": 840,
+        "wires": [
+            [
+                "018e55faa9732ddb"
+            ]
+        ]
+    },
+    {
+        "id": "f02765f6394a016e",
+        "type": "trigger",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "pay",
+        "duration": "-5",
+        "extend": false,
+        "overrideDelay": true,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 380,
+        "y": 440,
+        "wires": [
+            [
+                "8da3a833b0623c45"
+            ]
+        ]
+    },
+    {
+        "id": "a4c46c7e7f42a9fe",
+        "type": "ui_text",
+        "z": "3c3c01df6adf0cf0",
+        "group": "65d63b4a7aec4b4a",
+        "order": 8,
+        "width": 2,
+        "height": 1,
+        "name": "textBat",
+        "label": "",
+        "format": "{{msg.payload | number: 2}}",
+        "layout": "col-center",
+        "x": 960,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "95784984bfcb29d1",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "1",
+        "low": "0.1",
+        "high": "1.5",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 380,
+        "wires": [
+            [
+                "a4c46c7e7f42a9fe",
+                "d81288b2a3026ece",
+                "b2842c9f22257c28"
+            ]
+        ]
+    },
+    {
+        "id": "8da3a833b0623c45",
+        "type": "switch",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "4",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 570,
+        "y": 440,
+        "wires": [
+            [
+                "95784984bfcb29d1"
+            ],
+            [
+                "2338eb692673f5cc"
+            ],
+            [
+                "77cee8790298a127"
+            ],
+            [
+                "3914de253d306901"
+            ]
+        ]
+    },
+    {
+        "id": "2338eb692673f5cc",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "2",
+        "low": "1.6",
+        "high": "2.5",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 420,
+        "wires": [
+            [
+                "a4c46c7e7f42a9fe",
+                "d81288b2a3026ece",
+                "b2842c9f22257c28"
+            ]
+        ]
+    },
+    {
+        "id": "77cee8790298a127",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "3",
+        "low": "2.6",
+        "high": "3.5",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 460,
+        "wires": [
+            [
+                "a4c46c7e7f42a9fe",
+                "d81288b2a3026ece",
+                "b2842c9f22257c28"
+            ]
+        ]
+    },
+    {
+        "id": "3914de253d306901",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "4",
+        "low": "3.6",
+        "high": "5",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 500,
+        "wires": [
+            [
+                "a4c46c7e7f42a9fe",
+                "d81288b2a3026ece",
+                "b2842c9f22257c28"
+            ]
+        ]
+    },
+    {
+        "id": "6680af09c2c69f3f",
+        "type": "ui_text",
+        "z": "3c3c01df6adf0cf0",
+        "group": "65d63b4a7aec4b4a",
+        "order": 12,
+        "width": 2,
+        "height": 1,
+        "name": "textRevmi",
+        "label": "",
+        "format": "{{msg.payload | number: 2}}",
+        "layout": "col-center",
+        "x": 960,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "d81288b2a3026ece",
+        "type": "ui_gauge",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "group": "65d63b4a7aec4b4a",
+        "order": 9,
+        "width": 3,
+        "height": 2,
+        "gtype": "gage",
+        "title": "Batería",
+        "label": "units",
+        "format": "{{value| number: 2}}",
+        "min": 0,
+        "max": "5",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 960,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "5d9ce876f6210c4a",
+        "type": "trigger",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "pay",
+        "duration": "-5",
+        "extend": false,
+        "overrideDelay": true,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 380,
+        "y": 640,
+        "wires": [
+            [
+                "042e489accab7b5e"
+            ]
+        ]
+    },
+    {
+        "id": "0dd78e74082f2f06",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "1",
+        "low": "8",
+        "high": "10",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 580,
+        "wires": [
+            [
+                "e591d1bff4269cdb",
+                "6680af09c2c69f3f",
+                "ecac3b65986396f4"
+            ]
+        ]
+    },
+    {
+        "id": "042e489accab7b5e",
+        "type": "switch",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "4",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 570,
+        "y": 640,
+        "wires": [
+            [
+                "0dd78e74082f2f06"
+            ],
+            [
+                "54a2a2d853c549c7"
+            ],
+            [
+                "2bc091bff0664062"
+            ],
+            [
+                "14755fce209e628d"
+            ]
+        ]
+    },
+    {
+        "id": "54a2a2d853c549c7",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "2",
+        "low": "11",
+        "high": "16",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 620,
+        "wires": [
+            [
+                "e591d1bff4269cdb",
+                "6680af09c2c69f3f",
+                "ecac3b65986396f4"
+            ]
+        ]
+    },
+    {
+        "id": "2bc091bff0664062",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "3",
+        "low": "17",
+        "high": "25",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 660,
+        "wires": [
+            [
+                "e591d1bff4269cdb",
+                "6680af09c2c69f3f",
+                "ecac3b65986396f4"
+            ]
+        ]
+    },
+    {
+        "id": "14755fce209e628d",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "4",
+        "low": "26",
+        "high": "60",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 700,
+        "wires": [
+            [
+                "e591d1bff4269cdb",
+                "6680af09c2c69f3f",
+                "ecac3b65986396f4"
+            ]
+        ]
+    },
+    {
+        "id": "e591d1bff4269cdb",
+        "type": "ui_gauge",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "group": "65d63b4a7aec4b4a",
+        "order": 15,
+        "width": 3,
+        "height": 2,
+        "gtype": "gage",
+        "title": "Rev MI",
+        "label": "units",
+        "format": "{{value| number: 2}}",
+        "min": 0,
+        "max": "60",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 960,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "018e55faa9732ddb",
+        "type": "trigger",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "pay",
+        "duration": "-5",
+        "extend": false,
+        "overrideDelay": true,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 380,
+        "y": 840,
+        "wires": [
+            [
+                "b67a42aa3c00f5ec"
+            ]
+        ]
+    },
+    {
+        "id": "f67d0a23b79522c6",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "1",
+        "low": "8",
+        "high": "10",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 780,
+        "wires": [
+            [
+                "ab03ef1c71a166ca",
+                "bbdf2c2f9448c2c7",
+                "a6d32226220d1350"
+            ]
+        ]
+    },
+    {
+        "id": "b67a42aa3c00f5ec",
+        "type": "switch",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "4",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 570,
+        "y": 840,
+        "wires": [
+            [
+                "f67d0a23b79522c6"
+            ],
+            [
+                "4dd671c1e8d45946"
+            ],
+            [
+                "7a1281881345bbcd"
+            ],
+            [
+                "e9358fbd9816eedd"
+            ]
+        ]
+    },
+    {
+        "id": "4dd671c1e8d45946",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "2",
+        "low": "11",
+        "high": "16",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 820,
+        "wires": [
+            [
+                "ab03ef1c71a166ca",
+                "bbdf2c2f9448c2c7",
+                "a6d32226220d1350"
+            ]
+        ]
+    },
+    {
+        "id": "7a1281881345bbcd",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "3",
+        "low": "17",
+        "high": "25",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 860,
+        "wires": [
+            [
+                "ab03ef1c71a166ca",
+                "bbdf2c2f9448c2c7",
+                "a6d32226220d1350"
+            ]
+        ]
+    },
+    {
+        "id": "e9358fbd9816eedd",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "4",
+        "low": "26",
+        "high": "60",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 900,
+        "wires": [
+            [
+                "ab03ef1c71a166ca",
+                "bbdf2c2f9448c2c7",
+                "a6d32226220d1350"
+            ]
+        ]
+    },
+    {
+        "id": "ab03ef1c71a166ca",
+        "type": "ui_gauge",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "group": "65d63b4a7aec4b4a",
+        "order": 10,
+        "width": 3,
+        "height": 2,
+        "gtype": "gage",
+        "title": "Rev MD",
+        "label": "units",
+        "format": "{{value| number: 2}}",
+        "min": 0,
+        "max": "60",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 960,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "bbdf2c2f9448c2c7",
+        "type": "ui_text",
+        "z": "3c3c01df6adf0cf0",
+        "group": "65d63b4a7aec4b4a",
+        "order": 14,
+        "width": 2,
+        "height": 1,
+        "name": "textRevmd",
+        "label": "",
+        "format": "{{msg.payload | number: 2}}",
+        "layout": "col-center",
+        "x": 970,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "1d7eab7f6612ca75",
+        "type": "trigger",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "pay",
+        "duration": "-5",
+        "extend": false,
+        "overrideDelay": true,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 380,
+        "y": 1040,
+        "wires": [
+            [
+                "9a531c13ce63c516"
+            ]
+        ]
+    },
+    {
+        "id": "4c5b3bc37c55175d",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "1",
+        "low": "8",
+        "high": "10",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 980,
+        "wires": [
+            [
+                "759d48996cd0c4d0",
+                "8723d0b381da22b3",
+                "f5800317e402fd62"
+            ]
+        ]
+    },
+    {
+        "id": "9a531c13ce63c516",
+        "type": "switch",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "4",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 570,
+        "y": 1040,
+        "wires": [
+            [
+                "4c5b3bc37c55175d"
+            ],
+            [
+                "9dcd8df52893b08c"
+            ],
+            [
+                "1694a3e01438ecd5"
+            ],
+            [
+                "3968938d82f4a1c5"
+            ]
+        ]
+    },
+    {
+        "id": "9dcd8df52893b08c",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "2",
+        "low": "11",
+        "high": "16",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 1020,
+        "wires": [
+            [
+                "759d48996cd0c4d0",
+                "8723d0b381da22b3",
+                "f5800317e402fd62"
+            ]
+        ]
+    },
+    {
+        "id": "1694a3e01438ecd5",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "3",
+        "low": "17",
+        "high": "25",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 1060,
+        "wires": [
+            [
+                "759d48996cd0c4d0",
+                "8723d0b381da22b3",
+                "f5800317e402fd62"
+            ]
+        ]
+    },
+    {
+        "id": "3968938d82f4a1c5",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "4",
+        "low": "26",
+        "high": "60",
+        "inte": "false",
+        "property": "payload",
+        "x": 710,
+        "y": 1100,
+        "wires": [
+            [
+                "759d48996cd0c4d0",
+                "8723d0b381da22b3",
+                "f5800317e402fd62"
+            ]
+        ]
+    },
+    {
+        "id": "759d48996cd0c4d0",
+        "type": "ui_gauge",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "group": "65d63b4a7aec4b4a",
+        "order": 16,
+        "width": 3,
+        "height": 2,
+        "gtype": "gage",
+        "title": "Dis Ob",
+        "label": "units",
+        "format": "{{value| number: 2}}",
+        "min": 0,
+        "max": "60",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 950,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "8723d0b381da22b3",
+        "type": "ui_text",
+        "z": "3c3c01df6adf0cf0",
+        "group": "65d63b4a7aec4b4a",
+        "order": 18,
+        "width": 2,
+        "height": 1,
+        "name": "textDisOb",
+        "label": "",
+        "format": "{{msg.payload | number: 2}}",
+        "layout": "col-center",
+        "x": 960,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "ecac3b65986396f4",
+        "type": "function",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "func": "global.set(\"revMI\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a6d32226220d1350",
+        "type": "function",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "func": "global.set(\"revMD\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f5800317e402fd62",
+        "type": "function",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "func": "global.set(\"disOb\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 1080,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b2842c9f22257c28",
+        "type": "function",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "func": "global.set(\"bateria\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "967aa838222ea838",
+        "type": "inject",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 160,
+        "wires": [
+            [
+                "87b844eb54eba38a"
+            ]
+        ]
+    },
+    {
+        "id": "10a54256fcbdef6f",
+        "type": "ui_text_input",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "label": "Nombre Robot",
+        "tooltip": "",
+        "group": "63f688f9eb3064f9",
+        "order": 1,
+        "width": 5,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 180,
+        "y": 1260,
+        "wires": [
+            [
+                "985283d89445cd07"
+            ]
+        ]
+    },
+    {
+        "id": "b7171af9a38fe46a",
+        "type": "random",
+        "z": "3c3c01df6adf0cf0",
+        "name": "random Colision",
+        "low": "0",
+        "high": "1",
+        "inte": "true",
+        "property": "payload",
+        "x": 520,
+        "y": 300,
+        "wires": [
+            [
+                "2ae553c67a7367ca",
+                "22e4bbfd14eaf06c"
+            ]
+        ]
+    },
+    {
+        "id": "dc5582cf0128d7dc",
+        "type": "comment",
+        "z": "3c3c01df6adf0cf0",
+        "name": "Añadir Registro a tabla Metricas",
+        "info": "",
+        "x": 170,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "29aae2451e189d88",
+        "type": "comment",
+        "z": "3c3c01df6adf0cf0",
+        "name": "Ver Colisiones de un Robot",
+        "info": "",
+        "x": 150,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "985283d89445cd07",
+        "type": "function",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "func": "global.set(\"colisionesNombre\",msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 1260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "83bf727bd43c3f55",
+        "type": "ui_button",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "group": "63f688f9eb3064f9",
+        "order": 2,
+        "width": 5,
+        "height": 1,
+        "passthru": false,
+        "label": "Ver Colisiones",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 180,
+        "y": 1320,
+        "wires": [
+            [
+                "66d4befc12e3ac45"
+            ]
+        ]
+    },
+    {
+        "id": "2ec81aef9d28456b",
+        "type": "mysql",
+        "z": "3c3c01df6adf0cf0",
+        "mydb": "99bccc8f7ed35686",
+        "name": "Mysql",
+        "x": 550,
+        "y": 1320,
+        "wires": [
+            [
+                "6a37e45878b04cf9",
+                "bdf5d7bd3f4e144a"
+            ]
+        ]
+    },
+    {
+        "id": "6a37e45878b04cf9",
+        "type": "debug",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "66d4befc12e3ac45",
+        "type": "function",
+        "z": "3c3c01df6adf0cf0",
+        "name": "sentencia sum",
+        "func": "msg.topic = \"SELECT SUM(ColisionIR) FROM robotmovil.metricas WHERE Nombre='\"+global.get(\"colisionesNombre\")+\"'\"\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 1320,
+        "wires": [
+            [
+                "2ec81aef9d28456b"
+            ]
+        ]
+    },
+    {
+        "id": "bdf5d7bd3f4e144a",
+        "type": "ui_gauge",
+        "z": "3c3c01df6adf0cf0",
+        "name": "Gauge Colisiones",
+        "group": "63f688f9eb3064f9",
+        "order": 4,
+        "width": 5,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Colisiones",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#1d911f",
+            "#104711"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 730,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "8bb0e15894dfab4f",
+        "type": "trigger",
+        "z": "3c3c01df6adf0cf0",
+        "name": "",
+        "op1": "",
+        "op2": "0",
+        "op1type": "pay",
+        "op2type": "str",
+        "duration": "-5",
+        "extend": false,
+        "overrideDelay": true,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 340,
+        "y": 300,
+        "wires": [
+            [
+                "b7171af9a38fe46a"
+            ]
+        ]
+    },
+    {
+        "id": "3c29f8b9daba6300",
+        "type": "comment",
+        "z": "3c3c01df6adf0cf0",
+        "name": "Colision IR hay que asociarlo con algo para que arranque",
+        "info": "",
+        "x": 470,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "22e4bbfd14eaf06c",
+        "type": "ui_text",
+        "z": "3c3c01df6adf0cf0",
+        "group": "65d63b4a7aec4b4a",
+        "order": 19,
+        "width": 7,
+        "height": 1,
+        "name": "ColisionBool",
+        "label": "Colision: ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 710,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "fe44f67481995452",
+        "type": "ui_spacer",
+        "z": "3c3c01df6adf0cf0",
+        "name": "spacer",
+        "group": "65d63b4a7aec4b4a",
+        "order": 1,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "3fd5ca242c4d6e51",
+        "type": "ui_spacer",
+        "z": "3c3c01df6adf0cf0",
+        "name": "spacer",
+        "group": "65d63b4a7aec4b4a",
+        "order": 3,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "b51636b46fa699ec",
+        "type": "ui_spacer",
+        "z": "3c3c01df6adf0cf0",
+        "name": "spacer",
+        "group": "65d63b4a7aec4b4a",
+        "order": 4,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "a8fa8434073b5e43",
+        "type": "ui_spacer",
+        "z": "3c3c01df6adf0cf0",
+        "name": "spacer",
+        "group": "65d63b4a7aec4b4a",
+        "order": 6,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "d277563ebf099fb2",
+        "type": "ui_spacer",
+        "z": "3c3c01df6adf0cf0",
+        "name": "spacer",
+        "group": "65d63b4a7aec4b4a",
+        "order": 20,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "99c8c7063630a9c3",
+        "type": "ui_spacer",
+        "z": "3c3c01df6adf0cf0",
+        "name": "spacer",
+        "group": "63f688f9eb3064f9",
+        "order": 3,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "99bccc8f7ed35686",
+        "type": "MySQLdatabase",
+        "name": "RobotM",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "RobotMovil",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "65d63b4a7aec4b4a",
+        "type": "ui_group",
+        "name": "Robot",
+        "tab": "62643598c2bb5c16",
+        "order": 1,
+        "disp": true,
+        "width": 13,
+        "collapse": false
+    },
+    {
+        "id": "63f688f9eb3064f9",
+        "type": "ui_group",
+        "name": "Colisiones",
+        "tab": "62643598c2bb5c16",
+        "order": 2,
+        "disp": true,
+        "width": 5,
+        "collapse": false
+    },
+    {
+        "id": "62643598c2bb5c16",
+        "type": "ui_tab",
+        "name": "Robot",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
