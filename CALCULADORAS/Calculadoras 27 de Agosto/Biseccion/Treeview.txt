@@ -1,0 +1,33 @@
+def tabla():
+    top=Tk()
+    top.geometry('600x500')
+    tree = ttk.Treeview(top, column=("c1", "c2", "c3", "c4", "c5", "c6"), show='headings', height=15)
+    #Nombres columnas:
+    tree.column("# 1", anchor=CENTER, width=10)
+    tree.heading("# 1", text="i")
+    tree.column("# 2", anchor=CENTER)
+    tree.heading("# 2", text="Fa")
+    tree.column("# 3", anchor=CENTER)
+    tree.heading("# 3", text="Fb")
+    tree.column("# 4", anchor=CENTER)
+    tree.heading("# 4", text="raiz")
+    tree.column("# 5", anchor=CENTER)
+    tree.heading("# 5", text="Fr")
+    tree.column("# 6", anchor=CENTER)
+    tree.heading("# 6", text="Error")
+
+    titulo = Label(top, text= "ITERACIONES")
+
+    scroll = Scrollbar(top)
+    scroll.pack(side=RIGHT, fill=BOTH)
+
+    for n in range(0,len(lista2),1):
+        print(lista2[n])
+        tree.insert('', 'end', text="1", values=(lista2[n]))
+    tree.config(yscrollcommand = scroll.set)
+    scroll.config(command = tree.yview)
+
+    titulo.pack()
+    tree.pack()
+
+    top.mainloop()
